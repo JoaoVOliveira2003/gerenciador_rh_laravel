@@ -15,6 +15,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </head>
+    <style>
+        body {
+            background-color: #f1f3f5; /* cinza claro */
+            min-height: 100vh;
+        }
+
+        .page-content {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+    </style>
 <body>
 
     {{$slot}}

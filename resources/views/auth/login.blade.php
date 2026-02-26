@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password">Senha</label>
+                            <label for="password">Senha - 12345678</label>
                             <input type="password" class="form-control" id="password" name="password">
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
@@ -31,12 +31,16 @@
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="#">Esqueceu a sua senha?</a>
+                          <a href="{{route('password.request')}}">Esqueceu a sua senha?</a>
                             <button type="submit" class="btn btn-primary px-4">Entrar</button>
                         </div>
 
                     </form>
-
+                    @if (session('status'))
+                        <div class="alert alert-sucess mt-3 text-center">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 </div>
 
             </div>
