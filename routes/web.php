@@ -26,4 +26,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/user/profile/update-user-data',[ProfileController::class,'updateUserData'])->name('user.updateUserData');
 
     Route::get('/departments',[DepartmentController::class,'index'])->name('departments');
+    Route::get('/departments/new-departament',[DepartmentController::class,'newDepartment'])->name('departments.newDepartment');
+
+    Route::post('/departments/gravarDepartament',[DepartmentController::class,'gravarDepartament'])->name('departments.gravarDepartament');
 });

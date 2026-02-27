@@ -2,10 +2,10 @@
     <div class="">
         <h3>Novo departamento.</h3>
         <hr>
-        <form action="#" method="post">
+        <form action="{{ route('departments.gravarDepartament') }}" method="post">
             @csrf
             <div class="mb-3">
-                <label for="name" class="form-label">Department name</label>
+                <label for="name" class="form-label">Nome do departamento</label>
                 <input type="text" class="form-control" id="name" name="name" required>
                 @error('name')
                     <div class="text-danger">{{ $message }}</div>
@@ -13,10 +13,17 @@
             </div>
 
             <div class="mb-3">
-                <a href="{{ route('departments') }}">
-                   <button type="submit" class="btn btn-primary">Create department</button>
-                </a>
+                <button type="submit" class="btn btn-primary">
+                    Create department
+                </button>
             </div>
         </form>
+        <br>
+        <div class="mb-3">
+            <a href="{{ route('departments') }}">
+                <button type="submit" class="btn btn-primary">Voltar</button>
+            </a>
+        </div>
+
     </div>
 </x-layout-app>

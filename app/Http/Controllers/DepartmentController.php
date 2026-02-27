@@ -16,4 +16,19 @@ class DepartmentController extends Controller
         return view('department.departments',compact('departamentos'));
     }
 
+    public function newDepartment(){
+       Auth::user()->can('admin') ?: abort(403,'Não esta autorizado.');
+       return view('department.add-department');
+    }
+
+    public function gravarDepartament(Request $request){
+       Auth::user()->can('admin') ?: abort(403,'Não esta autorizado.');
+        $request->validate([
+            'name'=>'required|string|max:50|unique:departments'
+        ]);
+
+        Department::create(['name'=>$request->name]);
+
+        return redirect()->route('departments');
+    }
 }

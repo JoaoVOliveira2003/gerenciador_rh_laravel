@@ -8,7 +8,7 @@
         @if ($departamentos->count() === 0)
             <div class="text-center my-5">
                 <p>No departments found.</p>
-                <a href="#" class="btn btn-primary">Criar departamento</a>
+                <a href="{{route('departments.newDepartment')}}" class="btn btn-primary">Criar departamento</a>
             </div>
         @else
 
@@ -16,7 +16,7 @@
         @endif
 
         <div class="mb-3">
-            <a href="#" class="btn btn-primary">Criar departamento</a>
+            <a href="{{route('departments.newDepartment')}}" class="btn btn-primary">Criar departamento</a>
         </div>
 
         <table class="table w-50" id="table">
