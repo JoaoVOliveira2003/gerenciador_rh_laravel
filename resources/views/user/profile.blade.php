@@ -1,64 +1,24 @@
 <x-layout-app page-title="User profile">
-    <div class="w-100 p-4">
+
         <h3>User profile</h3>
         <hr>
+
         <x-profile-user-data></x-profile-user-data>
+
         <hr>
+
         <div class="container-fluid m-0 p-0 mt-5">
-            <div class="row">
-                <div class="col-3">
-                    <div class="border p-5 shadow-sm">
-                <form action="{{ route('user.updatePassword') }}" method="post">
-                            @csrf
-                            <h3>Change password</h3>
+            <div class="row g-4"> {{-- g-4 adiciona espaçamento entre colunas --}}
 
-                            <div class="mb-3">
-                                <label for="current_password" class="form-label">Current password</label>
-                                <input type="password" name="current_password" id="current_password"
-                                    class="form-control">
-                                @error('current_password')
-                                    <div class="danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="new_password" class="form-label">New password</label>
-                                <input type="password" name="new_password" id="new_password" class="form-control">
-                                @error('new_password')
-                                    <div class="danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="new_password_confirmation" class="form-label">Confirm new password</label>
-                                <input type="password" name="new_password_confirmation" id="new_password_confirmation"
-                                    class="form-control">
-                                @error('new_password_confirmation')
-                                    <div class="danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Change password</button>
-                            </div>
-
-                        </form>
-
-                        @if (session('error'))
-                            <div class="alert alert-danger mt-3">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        @if (session('success'))
-                            <div class="alert alert-success mt-3">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                    </div>
+                <div class="col-md-3">
+                    <x-profile-user-change-password />
                 </div>
+
+                <div class="col-md-3">
+                    <x-profile-user-change-data />
+                </div>
+
             </div>
         </div>
-        <hr>
-    </div>
+
 </x-layout-app>

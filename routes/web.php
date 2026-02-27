@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Mail\Message;
@@ -22,4 +23,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/user/profile',[ProfileController::class,'index'])->name('user.profile');
     Route::post('/user/profile/update-password',[ProfileController::class,'updatePassword'])->name('user.updatePassword');
+    Route::post('/user/profile/update-user-data',[ProfileController::class,'updateUserData'])->name('user.updateUserData');
+
+    Route::get('/departments',[DepartmentController::class,'index'])->name('departments');
 });
