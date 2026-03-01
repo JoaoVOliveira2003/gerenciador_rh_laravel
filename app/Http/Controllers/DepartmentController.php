@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 
+
 class DepartmentController extends Controller
 {
     public function index()
@@ -26,6 +27,7 @@ class DepartmentController extends Controller
     public function gravarDepartament(Request $request)
     {
         Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
+
         $request->validate([
             'name' => 'required|string|max:50|unique:departments'
         ]);
@@ -86,8 +88,7 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
         $department->delete();
-
-        return redirect()->route('departments')
-            ->with('success', 'Departamento deletado com sucesso!');
+        return redirect()->route('departments')->with('success', 'Departamento deletado com sucesso!');
     }
+
 }

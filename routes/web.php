@@ -36,4 +36,11 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/rhUsers',[RhUserController::class,'index'])->name('rhUsers');
     Route::get('/telaAdicionarRH',[RhUserController::class,'telaAdicionarRH'])->name('telaAdicionarRH');
-    });
+    Route::post('/gravarUserRH',[RhUserController::class,'gravarUserRH'])->name('gravarUserRH');
+    Route::get('/telaApagarRH/{id}',[RhUserController::class,'telaApagarRH'])->name('telaApagarRH');
+    Route::get('/deletarPessoaRH/{id}',[RhUserController::class,'deletarPessoaRH'])->name('deletarPessoaRH');
+
+    Route::get('/telaEditarRH/{id}',[RhUserController::class,'telaEditarRH'])->name('telaEditarRH');
+    Route::post('/editarUserRH',[RhUserController::class,'editarUserRH'])->name('editarUserRH');
+
+});
