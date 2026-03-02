@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ConfirmAccountEmail;
 use App\Models\User;
 use App\Models\UserDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Department;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class RhUserController extends Controller
 {
@@ -81,12 +84,14 @@ class RhUserController extends Controller
                 'admission_date.date' => 'Informe uma data válida.',
             ]
         );
+        $token = Str::random('50');
 
         $user = User::create([
             'name' => $dados->name,
             'email' => $dados->email,
             'password' => bcrypt($dados->new_password),
             'role' => 'rh',
+            'confirmation_token'=>$token,
             'permissions' => '["rh"]',
             'department_id' => $dados->select_department,
         ]);
@@ -98,10 +103,11 @@ class RhUserController extends Controller
             'city' => $dados['city'],
             'phone' => $dados['phone'],
             'salary' => $dados['salary'],
-            'admission_date' => Carbon::createFromFormat('Ymd', $dados['admission_date'])
-                ->format('Y-m-d'),
+            'admission_date' => Carbon::createFromFormat('Ymd', $dados['admission_date'])->format('Y-m-d'),
         ]);
 
+        //rnviar emial para o user
+        Mail::to($user->email)->send(new ConfirmAccountEmail(route('ConfirmAccont',$token)));
 
         return redirect()->route('rhUsers');
     }

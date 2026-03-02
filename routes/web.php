@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ColaboratorsControl;
+use App\Http\Controllers\ConfirmAccontController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RhUserController;
@@ -43,4 +45,22 @@ Route::middleware('auth')->group(function(){
     Route::get('/telaEditarRH/{id}',[RhUserController::class,'telaEditarRH'])->name('telaEditarRH');
     Route::post('/editarUserRH',[RhUserController::class,'editarUserRH'])->name('editarUserRH');
 
+    Route::get('/verTodosUsuarios',[ColaboratorsControl::class,'index'])->name('verTodosUsuarios');
+    Route::get('/verDetalhesUsuario/{id}',[ColaboratorsControl::class,'verDetalhesUsuario'])->name('verDetalhesUsuario');
+    Route::get('/colaborador/{id}',[ColaboratorsControl::class,'telaDeletarUsuarioSoft'])->name('telaDeletarUsuarioSoft');
+    Route::get('/colaborador/confirmarDelete/{id}',[ColaboratorsControl::class,'DeletarUsuarioSoftConfirm'])->name('DeletarUsuarioSoftConfirm');
+
+
+
+
+
+
+
+
 });
+
+Route::middleware('guest')->group(function(){
+    Route::get('/confirm-acconunt/{token}',[ConfirmAccontController::class,'ConfirmAccont'])->name('ConfirmAccont');
+    Route::post('/confirmarConta',[ConfirmAccontController::class,'confirmarConta'])->name('confirmarConta');
+});
+

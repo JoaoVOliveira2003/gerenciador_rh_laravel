@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 
@@ -16,11 +17,13 @@ class User extends Authenticable
     'role',
     'permissions',
     'department_id',
+    'confirmation_token',
     ];
 
     use HasFactory;
     use Notifiable;
-
+    use SoftDeletes;
+    
     public function detail(){
         return $this->hasOne(UserDetail::class);
     }

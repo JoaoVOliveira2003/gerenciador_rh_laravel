@@ -4,18 +4,18 @@
         <div class="row justify-content-center">
             <div class="col-4">
 
-                <!-- logo -->
                 <div class="text-center mb-5">
                     <img src="assets/images/logo.png" alt="Logo" width="200px">
                 </div>
 
-                <!-- login form -->
                 <div class="card p-5">
 
                     <form action="{{route('login')}}" method="post">
                         @CSRF
                         <div class="mb-3">
-                            <label for="email">Email - ojoao953@gmail.com</label>
+                            <label for="email">Email <br> ojoao953@gmail.com |  3ojoao953@gmail.com
+
+                        </label>
                             <input type="email" class="form-control" id="email" name="email">
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password">Senha - Senha12345</label>
+                            <label for="password">Senha <br> Senha12345 | 3senha</label>
                             <input type="password" class="form-control" id="password" name="password">
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
