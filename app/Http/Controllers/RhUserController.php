@@ -91,7 +91,7 @@ class RhUserController extends Controller
             'email' => $dados->email,
             'password' => bcrypt($dados->new_password),
             'role' => 'rh',
-            'confirmation_token'=>$token,
+            'confirmation_token' => $token,
             'permissions' => '["rh"]',
             'department_id' => $dados->select_department,
         ]);
@@ -107,7 +107,7 @@ class RhUserController extends Controller
         ]);
 
         //rnviar emial para o user
-        Mail::to($user->email)->send(new ConfirmAccountEmail(route('ConfirmAccont',$token)));
+        Mail::to($user->email)->send(new ConfirmAccountEmail(route('ConfirmAccont', $token)));
 
         return redirect()->route('rhUsers');
     }
@@ -121,45 +121,57 @@ class RhUserController extends Controller
         return view('colaborators.telaEditarRH', compact('colaborador', 'userDetail', 'departamento'));
     }
 
-public function editarUserRH(Request $dados)
-{
-    Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
+    public function editarUserRH(Request $dados)
+    {
+        Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
 
-    $dados->validate([
-        'name' => 'required|string|min:3|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . $dados->id,
-        'select_department' => 'required|integer|exists:departments,id',
-        'address' => 'required|string|max:255',
-        'zip_code' => 'required|string|min:8|max:9',
-        'city' => 'required|string|max:100',
-        'phone' => 'required|string|min:10|max:15',
-        'salary' => 'required|numeric|min:0',
-        'admission_date' => 'required|date|before_or_equal:today',
-    ]);
+        $dados->validate([
+            'name' => 'required|string|min:3|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $dados->id,
+            'select_department' => 'required|integer|exists:departments,id',
+            'address' => 'required|string|max:255',
+            'zip_code' => 'required|string|min:8|max:9',
+            'city' => 'required|string|max:100',
+            'phone' => 'required|string|min:10|max:15',
+            'salary' => 'required|numeric|min:0',
+            'admission_date' => 'required|date|before_or_equal:today',
+        ]);
 
 
-    $user = User::findOrFail($dados->id);
+        $user = User::findOrFail($dados->id);
 
-    $user->update([
-        'name' => $dados->name,
-        'email' => $dados->email,
-        'role' => 'rh',
-        'permissions' => '["rh"]',
-        'department_id' => $dados->select_department,
-    ]);
+        $user->update([
+            'name' => $dados->name,
+            'email' => $dados->email,
+            'role' => 'rh',
+            'permissions' => '["rh"]',
+            'department_id' => $dados->select_department,
+        ]);
 
-   $user->detail()->updateOrCreate(
-        ['user_id' => $user->id],
-        [
-            'address' => $dados->address,
-            'zip_code' => $dados->zip_code,
-            'city' => $dados->city,
-            'phone' => $dados->phone,
-            'salary' => $dados->salary,
-            'admission_date' => $dados->admission_date,
-        ]
-    );
+        $user->detail()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'address' => $dados->address,
+                'zip_code' => $dados->zip_code,
+                'city' => $dados->city,
+                'phone' => $dados->phone,
+                'salary' => $dados->salary,
+                'admission_date' => $dados->admission_date,
+            ]
+        );
 
-    return redirect()->route('rhUsers');
-}
+        return redirect()->route('rhUsers');
+    }
+
+    public function telaRestoreRH($id)
+    {
+        Auth::user()->can('admin') ?: abort(403, 'N pode fazer isso');
+        $colaborador = User::withTrashed()->where('role', 'rh')->findOrFail($id);
+        $colaborador->restore();
+        return redirect()->route('rhUsers')->with('sucess', 'restaurado');
+    }
+
+    public function RestoreRH() {}
+    public function telaRestoreColaborador() {}
+    public function RestoreColaborador() {}
 }

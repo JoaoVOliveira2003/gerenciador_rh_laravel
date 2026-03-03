@@ -12,7 +12,7 @@
             <h3 class="my-5">{{$colaborator->name}}</h3>
             <p>{{$colaborator->email}}</p>
             <a href="{{route('verTodosUsuarios')}}" class="btn btn-secondary btn-sm">No</a>
-            <a href="{{ route('DeletarUsuarioSoftConfirm', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+            <a href="{{route('DeletarUsuarioSoftConfirm', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
         </div>
 
     </div>
