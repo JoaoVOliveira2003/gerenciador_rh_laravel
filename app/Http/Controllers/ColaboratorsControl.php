@@ -13,7 +13,10 @@ class ColaboratorsControl extends Controller
     {
         Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
 
-        $colaborators = User::with('detail', 'department')    // ->where('role','<>','admin')
+        // ->where('role','<>','admin')
+
+        $colaborators = User::with('detail', 'department')
+            ->withTrashed()
             ->get();
 
         return view('colaborators.admin-all-colaborators')->with('colaborators', $colaborators);
@@ -58,6 +61,14 @@ class ColaboratorsControl extends Controller
 
         $colaborator->delete();
 
+        return redirect()->route('verTodosUsuarios');
+    }
+
+    public function RestoreColaborador($id)
+    {
+        Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
+        $colaborador = User::withTrashed()->findOrFail($id);
+        $colaborador->restore();
         return redirect()->route('verTodosUsuarios');
     }
 }

@@ -18,7 +18,7 @@ class RhUserController extends Controller
     public function index()
     {
         Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
-        $colaborators = User::where('role', 'rh')->get();
+        $colaborators = User::withTrashed()->where('role', 'rh')->get();
         return view('colaborators.rh-users', compact('colaborators'));
     }
 
@@ -163,15 +163,4 @@ class RhUserController extends Controller
         return redirect()->route('rhUsers');
     }
 
-    public function telaRestoreRH($id)
-    {
-        Auth::user()->can('admin') ?: abort(403, 'N pode fazer isso');
-        $colaborador = User::withTrashed()->where('role', 'rh')->findOrFail($id);
-        $colaborador->restore();
-        return redirect()->route('rhUsers')->with('sucess', 'restaurado');
-    }
-
-    public function RestoreRH() {}
-    public function telaRestoreColaborador() {}
-    public function RestoreColaborador() {}
 }

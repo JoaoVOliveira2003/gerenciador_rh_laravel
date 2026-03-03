@@ -2,7 +2,7 @@
 
     <div class="w-100 p-4">
 
-        <h3>All colaborators</h3>
+        <h3>Todos colaborators</h3>
 
         <hr>
 
@@ -49,8 +49,14 @@
                                 @endempty
                             </td>
                             <td class="text-end">
-                                <a href="{{ route('verDetalhesUsuario', ['id' => $colaborator->id]) }}"    class="btn btn-sm btn-outline-primary">Detalhes.</a>
+
+                                @if(!empty($colaborator->deleted_at))
+                                    <a href="{{ route('RestoreColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a>
+                                @else
+                                <a href="{{ route('verDetalhesUsuario', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">Detalhes.</a>
                                 <a href="{{ route('telaDeletarUsuarioSoft', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                @endif
+
                             </td>
                         </tr>
                     @endforeach

@@ -1,7 +1,7 @@
 <x-layout-app title="Colaborators">
     <div class="w-100 p-4 colaborators-page">
 
-        <h3>Colaborators</h3>
+        <h3>Colaboradores do RH</h3>
         <hr>
 
         @php
@@ -37,7 +37,11 @@
                             <td>{{ ucfirst(str_replace(['[', ']', '"'], '', $colaborator->permissions)) }}</td>
                             <td class="text-end">
                                 <a href="{{ route('telaEditarRH',['id'=> $colaborator->id]) }}" class="btn btn-sm btn-outline-dark">Editar</a>
-                                <a href="{{ route('telaApagarRH', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                @if(!empty($colavorator->deleted_at))
+                                    <a href="{{ route('RestoreRH', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a>
+                                @else
+                                    <a href="{{ route('telaApagarRH', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

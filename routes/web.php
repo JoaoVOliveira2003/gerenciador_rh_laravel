@@ -51,10 +51,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/colaborador/confirmarDelete/{id}',[ColaboratorsControl::class,'DeletarUsuarioSoftConfirm'])->name('DeletarUsuarioSoftConfirm');
 
 
-    Route::get('/telaRestoreRH/{id}',[RhUserController::class,'telaRestoreRH'])->name('telaRestoreRH');
-    Route::get('/RestoreRH/{id}',[RhUserController::class,'RestoreRH'])->name('RestoreRH');
-    Route::get('/telaRestoreColaborador/{id}',[RhUserController::class,'telaRestoreColaborador'])->name('telaRestoreColaborador');
-    Route::get('/RestoreColaborador/{id}',[RhUserController::class,'RestoreColaborador'])->name('RestoreColaborador');
+    Route::get('/RestoreColaborador/{id}',    [ColaboratorsControl::class,'RestoreColaborador'])->name('RestoreColaborador');
 
 
 
