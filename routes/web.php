@@ -4,6 +4,7 @@ use App\Http\Controllers\ColaboratorsControl;
 use App\Http\Controllers\ConfirmAccontController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RhManagementController;
 use App\Http\Controllers\RhUserController;
 use App\Models\User;
 use Illuminate\Mail\Message;
@@ -21,8 +22,19 @@ Route::get('/enviarEmailTest', function () {
 });
 
 Route::middleware('auth')->group(function(){
-    Route::view('home','home')->name('home');
     Route::redirect('/','home');
+
+    Route::get('/home',function(){
+        if(auth()->user()->role==='admin'){
+            die('Vai para a pagina inicial do ADMIN');
+        }
+        elseif(auth()->user()->role==='rh'){
+            return redirect()->route('rh.management.home');
+        }
+        else{
+            die('Vai para a pagina inicial do ADMIN');
+        }
+    })->name('home');
 
     Route::get('/user/profile',[ProfileController::class,'index'])->name('user.profile');
     Route::post('/user/profile/update-password',[ProfileController::class,'updatePassword'])->name('user.updatePassword');
@@ -49,11 +61,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/verDetalhesUsuario/{id}',[ColaboratorsControl::class,'verDetalhesUsuario'])->name('verDetalhesUsuario');
     Route::get('/colaborador/{id}',[ColaboratorsControl::class,'telaDeletarUsuarioSoft'])->name('telaDeletarUsuarioSoft');
     Route::get('/colaborador/confirmarDelete/{id}',[ColaboratorsControl::class,'DeletarUsuarioSoftConfirm'])->name('DeletarUsuarioSoftConfirm');
-
-
     Route::get('/RestoreColaborador/{id}',    [ColaboratorsControl::class,'RestoreColaborador'])->name('RestoreColaborador');
 
-
+    Route::get('/rhUser/management/home',[RhManagementController::class,'home'])->name('rh.management.home');
 
 
 
