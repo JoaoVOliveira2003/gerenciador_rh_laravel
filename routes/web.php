@@ -70,8 +70,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/RestoreColaborador/{id}',    [ColaboratorsControl::class,'RestoreColaborador'])->name('RestoreColaborador');
 
     Route::get('/rhUser/management/home',[RhManagementController::class,'home'])->name('rh.management.home');
+    Route::get('/telaEditColaborator/{id}',[RhManagementController::class,'telaEditColaborator'])->name('telaEditColaborator');
 
-
+    Route::get( '/EditarColaborator/{id}',[RhManagementController::class,'telaEditColaborator'])->name('telaEditColaborator');
+    Route::post( '/updateColaborator',[RhManagementController::class,'updateColaborator'])->name('updateColaborator');
+    Route::get( '/verDetalhesColaborador/{id}',[RhManagementController::class,'verDetalhesColaborador'])->name('verDetalhesColaborador');
 
 
 

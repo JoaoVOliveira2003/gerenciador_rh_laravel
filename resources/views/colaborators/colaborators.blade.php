@@ -18,7 +18,7 @@
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route('rh.management.newColaborator') }}" class="btn btn-primary">Criar colaborator</a>
+                <a href="" class="btn btn-primary">Criar colaborator</a>
             </div>
 
             <table class="table">
@@ -51,10 +51,11 @@
                             <td class="text-end">
 
                                 @if(!empty($colaborator->deleted_at))
-                                    <a href="{{ route('RestoreColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a>
+                                    {{-- <a href="{{ route('RestoreColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a> --}}
                                 @else
-                                <a href="{{ route('verDetalhesUsuario', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">Detalhes.</a>
-                                <a href="{{ route('telaDeletarUsuarioSoft', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    <a href="{{ route('verDetalhesColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">Detalhes.</a>
+                                    {{-- <a href="{{ route('telaDeletarUsuarioSoft', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a> --}}
+                                    <a href="{{ route('telaEditColaborator', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">editar.</a>
                                 @endif
 
                             </td>

@@ -35,14 +35,14 @@
                             <div class="d-flex">
                                 <div class="flex-grow-1 pe-3">
                                     <label for="select_department">Departamento</label>
-<select name="select_department" class="form-select">
-    @foreach ($departamento as $department)
-        <option value="{{ $department->id }}"
-            {{ $department->id == $colaborador->department_id ? 'selected' : '' }}>
-            {{ $department->name }}
-        </option>
-    @endforeach
-</select>
+                                    <select name="select_department" class="form-select">
+                                        @foreach ($departamento as $department)
+                                            <option value="{{ $department->id }}"
+                                                {{ $department->id == $colaborador->department_id ? 'selected' : '' }}>
+                                                {{ $department->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
 
                                     @error('select_department')

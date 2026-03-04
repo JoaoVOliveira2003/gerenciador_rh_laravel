@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 
 use App\Http\Controllers\Controller;
@@ -15,27 +16,30 @@ use Illuminate\Support\Str;
 
 class RhManagementController extends Controller
 {
-    public function home(){
-        Auth::user()->can('rh') ?: abort(403,'Vc não tem permissão');
-        $colaborators = User::with('detail','department')->where('role','colaborator')->withTrashed()->get();
-        return view('colaborators.colaborators',compact('colaborators'));
+    public function home()
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Vc não tem permissão');
+        $colaborators = User::with('detail', 'department')->where('role', 'colaborator')->withTrashed()->get();
+        return view('colaborators.colaborators', compact('colaborators'));
     }
 
-    public function newColaborator(){
-        Auth::user()->can('rh') ?: abort(403,'Vc não tem permissão');
+    public function newColaborator()
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Vc não tem permissão');
         // $departments = Department::where('id','>',value: 2)->get();
 
-        $departments = Department::where('id','>',value: 2)->get();
+        $departments = Department::where('id', '>', value: 2)->get();
 
 
-        if($departments->count() === 0){
-            abort(403,'Insira mais departamentos');
+        if ($departments->count() === 0) {
+            abort(403, 'Insira mais departamentos');
         }
-        return view('colaborators.add-colaborator',compact('departments'));
+        return view('colaborators.add-colaborator', compact('departments'));
     }
 
-    public function adicionarColaborador(Request $dados){
-         Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.');
+    public function adicionarColaborador(Request $dados)
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.');
 
         $dados->validate(
             [
@@ -86,11 +90,52 @@ class RhManagementController extends Controller
             'city' => $dados['city'],
             'phone' => $dados['phone'],
             'salary' => $dados['salary'],
-            'admission_date' => Carbon::createFromFormat('Y-m-d', $dados['admission_date'])->format('Y-m-d'),]);
+            'admission_date' => Carbon::createFromFormat('Y-m-d', $dados['admission_date'])->format('Y-m-d'),
+        ]);
 
         //rnviar emial para o user
         Mail::to($user->email)->send(new ConfirmAccountEmail(route('ConfirmAccont', $token)));
 
         return redirect()->route('rh.management.home');
+    }
+
+    public function telaEditColaborator($id)
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.');
+
+        $colaborador = User::with('detail')->findOrFail($id);
+        $departamento = Department::where('id', '>', 2)->get();
+        $userDetail = UserDetail::where('user_id', $id)->first();
+        return view('colaborators.telaEditarColaborador', compact('colaborador', 'departamento', 'userDetail'));
+    }
+    public function updateColaborator(Request $request)
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.');
+
+        if ($request->select_department <= 2) {
+            return redirect()->route('home');
+        }
+
+        $user = User::with('detail')->findOrFail($request->user_id);
+
+        $user->detail->salary = $request->salary;
+        $user->detail->admission_date = $request->admission_date; // corrigido
+        $user->department_id = $request->select_department;
+
+        $user->save();
+        $user->detail->save();
+
+        return redirect()->route('rh.management.home');
+    }
+
+    public function verDetalhesColaborador($id)
+    {
+        Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.!');
+
+        $colaborator = User::with('detail', 'department')
+            ->where('id', $id)
+            ->first();
+
+        return view('colaborators.show-details')->with('colaborator', $colaborator);
     }
 }
