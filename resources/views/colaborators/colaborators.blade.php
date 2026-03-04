@@ -2,7 +2,7 @@
 
     <div class="w-100 p-4">
 
-        <h3>Todos colaborators RH</h3>
+        <h3>Todos colaborators normais</h3>
 
         <hr>
 
@@ -14,11 +14,11 @@
         @if ($totalColaborators === 0)
             <div class="text-center my-5 empty-state">
                 <p>No colaborators found.</p>
-                <a href="{{ route('telaAdicionarRH') }}" class="btn btn-primary">Criar colaborator</a>
+                <a href="{{ route('rh.management.newColaborator') }}" class="btn btn-primary">Criar colaborator</a>
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route('telaAdicionarRH') }}" class="btn btn-primary">Criar colaborator</a>
+                <a href="{{ route('rh.management.newColaborator') }}" class="btn btn-primary">Criar colaborator</a>
             </div>
 
             <table class="table">

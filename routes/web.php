@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminManagementController;
 use App\Http\Controllers\ColaboratorsControl;
 use App\Http\Controllers\ConfirmAccontController;
 use App\Http\Controllers\DepartmentController;
@@ -26,7 +27,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/home',function(){
         if(auth()->user()->role==='admin'){
-            die('Vai para a pagina inicial do ADMIN');
+            return redirect()->route('admin.home');
         }
         elseif(auth()->user()->role==='rh'){
             return redirect()->route('rh.management.home');
@@ -35,6 +36,11 @@ Route::middleware('auth')->group(function(){
             die('Vai para a pagina inicial do ADMIN');
         }
     })->name('home');
+
+    Route::post('/adicionarColaborador',[RhManagementController::class,'adicionarColaborador'])->name('adicionarColaborador');
+
+    Route::get('/rhUser/management/criarNovoColaborador',[RhManagementController::class,'newColaborator'])->name('rh.management.newColaborator');
+    Route::get('/admin/home',[AdminManagementController::class,'home'])->name('admin.home');
 
     Route::get('/user/profile',[ProfileController::class,'index'])->name('user.profile');
     Route::post('/user/profile/update-password',[ProfileController::class,'updatePassword'])->name('user.updatePassword');
