@@ -9,6 +9,7 @@ use App\Http\Controllers\RhManagementController;
 use App\Http\Controllers\RhUserController;
 use App\Models\User;
 use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -26,17 +27,26 @@ Route::middleware('auth')->group(function(){
     Route::redirect('/','home');
 
     Route::get('/home',function(){
-        if(auth()->user()->role==='admin'){
-            return redirect()->route('admin.home');
-        }
-        elseif(auth()->user()->role==='rh'){
+        // if(auth()->user()->role==='admin'){
+        //     return redirect()->route('rh.management.home');
+        // }
+        // else
+        if(auth()->user()->role==='rh' || auth()->user()->role==='admin'){
             return redirect()->route('rh.management.home');
+        }
+        elseif(auth()->user()->role==='colaborator'){
+            return redirect()->route('colaborator.home');
         }
         else{
             die('Vai para a pagina inicial do ADMIN');
         }
     })->name('home');
 
+
+
+    Route::post('/atualizarEndereco',[ProfileController::class,'atualizarEndereco'])->name('atualizarEndereco');
+
+    Route::get('/colaborador/home',[ColaboratorsControl::class,'home'])->name('colaborator.home');
     Route::post('/adicionarColaborador',[RhManagementController::class,'adicionarColaborador'])->name('adicionarColaborador');
 
     Route::get('/rhUser/management/criarNovoColaborador',[RhManagementController::class,'newColaborator'])->name('rh.management.newColaborator');
@@ -57,7 +67,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/rhUsers',[RhUserController::class,'index'])->name('rhUsers');
     Route::get('/telaAdicionarRH',[RhUserController::class,'telaAdicionarRH'])->name('telaAdicionarRH');
     Route::post('/gravarUserRH',[RhUserController::class,'gravarUserRH'])->name('gravarUserRH');
-    Route::get('/telaApagarRH/{id}',[RhUserController::class,'telaApagarRH'])->name('telaApagarRH');
+    Route::get('/telaDeletar/{id}',[RhUserController::class,'telaDeletar'])->name('telaDeletar');
     Route::get('/deletarPessoaRH/{id}',[RhUserController::class,'deletarPessoaRH'])->name('deletarPessoaRH');
 
     Route::get('/telaEditarRH/{id}',[RhUserController::class,'telaEditarRH'])->name('telaEditarRH');

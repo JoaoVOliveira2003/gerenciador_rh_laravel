@@ -13,7 +13,7 @@
                     <form action="{{route('login')}}" method="post">
                         @CSRF
                         <div class="mb-3">
-                            <label for="email">Email <br> ojoao953@gmail.com |  3ojoao953@gmail.com
+                            <label for="email">Email <br>ojoao953@gmail.com<br>3ojoao953@gmail.com<br>colaborator@gmail.com
 
                         </label>
                             <input type="email" class="form-control" id="email" name="email">
@@ -23,7 +23,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password">Senha <br> Senha12345 | 3senha</label>
+                            <label for="password">Senha <br> Senha12345<br>3senha<br>colaborator</label>
                             <input type="password" class="form-control" id="password" name="password">
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>

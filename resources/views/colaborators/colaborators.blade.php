@@ -39,8 +39,7 @@
                             <td>{{ $colaborator->name }}</td>
                             <td>{{ $colaborator->email }}</td>
                             <td>{{ ucfirst(str_replace(['[', ']', '"'], '', $colaborator->permissions)) }}</td>
-                            <td>{{ $colaborator->department->name }}</td>
-                            <td>
+<td>{{ $colaborator->department?->name ?? 'Sem departamento' }}</td>                            <td>
                                 @empty($colaborator->email_verified_at)
                                 <span class="badge bg-success">Sim</span>
 
@@ -51,10 +50,10 @@
                             <td class="text-end">
 
                                 @if(!empty($colaborator->deleted_at))
-                                    {{-- <a href="{{ route('RestoreColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a> --}}
+                                    <a href="{{ route('RestoreColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a>
                                 @else
                                     <a href="{{ route('verDetalhesColaborador', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">Detalhes.</a>
-                                    {{-- <a href="{{ route('telaDeletarUsuarioSoft', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a> --}}
+                                    <a href="{{ route('telaDeletar', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
                                     <a href="{{ route('telaEditColaborator', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-primary">editar.</a>
                                 @endif
 

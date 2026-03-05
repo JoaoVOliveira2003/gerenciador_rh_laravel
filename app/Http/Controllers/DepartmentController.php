@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -86,8 +87,14 @@ class DepartmentController extends Controller
 
     public function deletarDepartamento($id)
     {
+        User::where('department_id', $id)->update(['department_id' => 0]);
+
         $department = Department::findOrFail($id);
         $department->delete();
+
+        // $usuario = User::findOrFail($id);
+        // $usuario->department = null;
+        // $usuario->save();
         return redirect()->route('departments')->with('success', 'Departamento deletado com sucesso!');
     }
 

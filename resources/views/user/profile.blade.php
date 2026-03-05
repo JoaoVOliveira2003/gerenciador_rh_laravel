@@ -11,11 +11,16 @@
             <div class="row g-4">
 
                 <div class="col-md-3">
-                    <x-profile-user-change-password />
+                    <x-profile-user-change-password :colaborator="$colaborator"/>
                 </div>
 
+
                 <div class="col-md-3">
-                    <x-profile-user-change-data />
+                    <x-profile-user-change-data :colaborator="$colaborator"/>
+                </div>
+
+            <div class="col-md-3">
+                    <x-profile-user-change-address :colaborator="$colaborator"/>
                 </div>
 
             </div>

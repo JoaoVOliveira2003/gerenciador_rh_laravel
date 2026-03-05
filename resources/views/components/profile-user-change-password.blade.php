@@ -2,10 +2,9 @@
         <form action="{{ route('user.updatePassword') }}" method="post">
             @csrf
             <h3>Change password</h3>
-
             <div class="mb-3">
                 <label for="current_password" class="form-label">Current password</label>
-                <input type="password" name="current_password" id="current_password" class="form-control">
+                <input type="password" name="current_password" id="current_password" class="form-control" >
                 @error('current_password')
                     <div class="danger">{{ $message }}</div>
                 @enderror

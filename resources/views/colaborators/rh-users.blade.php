@@ -40,7 +40,7 @@
                                 @if(!empty($colavorator->deleted_at))
                                     <a href="{{ route('RestoreRH', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Restaurar</a>
                                 @else
-                                    <a href="{{ route('telaApagarRH', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    <a href="{{ route('telaDeletar', ['id' => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
                                 @endif
                             </td>
                         </tr>

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        return view('user.profile');
+        $colaborator = User::with('detail','department')->findOrFail(auth()->id());
+        return view('user.profile')->with('colaborator',$colaborator);
     }
 
     public function updatePassword(Request $request)
@@ -51,5 +54,26 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->back()->with('success_change_data', 'Mudança de dados realizada com sucesso.');
+    }
+
+    // public function atualizarEndereco(Request $dados){
+    //     $endereco = UserDetail::where('user_id', auth()->id())->firstOrFail();
+    //     $endereco->address = $dados->address;
+    //     $endereco->zip_code = $dados->zip_code;
+    //     $endereco->city = $dados->city;
+    //     $endereco->save();
+    //     return redirect()->back()->with('success_change_data', 'Mudança de dados realizada com sucesso.');
+    // }
+    public function atualizarEndereco(Request $dados)
+    {
+        $endereco = UserDetail::where('user_id', auth()->id())->firstOrFail();
+
+        $endereco->update(
+            collect($dados->only(['address', 'zip_code', 'city']))
+                ->filter(fn($value) => filled($value))
+                ->toArray()
+        );
+
+        return redirect()->back()->with('success_change_data_endereco', 'Mudança de dados realizada com sucesso.');
     }
 }

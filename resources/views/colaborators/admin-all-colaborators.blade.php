@@ -39,8 +39,7 @@
                             <td>{{ $colaborator->name }}</td>
                             <td>{{ $colaborator->email }}</td>
                             <td>{{ ucfirst(str_replace(['[', ']', '"'], '', $colaborator->permissions)) }}</td>
-                            <td>{{ $colaborator->department->name }}</td>
-                            <td>
+<td>{{ $colaborator->department?->name ?? 'Sem departamento' }}</td>                            <td>
                                 @empty($colaborator->email_verified_at)
                                 <span class="badge bg-success">Sim</span>
 

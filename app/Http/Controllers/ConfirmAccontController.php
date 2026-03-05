@@ -31,6 +31,3 @@ class ConfirmAccontController extends Controller
         return view('auth.welcome')->with('user',$user);
     }
 }
-
-// 3ojoao953@gmail.com
-// 3senha

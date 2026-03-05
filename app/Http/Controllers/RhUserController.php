@@ -22,16 +22,16 @@ class RhUserController extends Controller
         return view('colaborators.rh-users', compact('colaborators'));
     }
 
-    public function telaApagarRH($id)
+    public function telaDeletar($id)
     {
-        Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
+        // Auth::user()->can('admin') ?: abort(403, 'Não esta autorizado.');
         $colaborador = User::findOrFail($id);
         return view('colaborators.telaDeletar', compact('colaborador'));
     }
 
     public function deletarPessoaRH($id)
     {
-        $userDetail = UserDetail::where('user_id', $id)->first();
+        $userDetail = UserDetail::where(column: 'user_id', $id)->first();
 
         if ($userDetail) {
             $userDetail->delete();
@@ -40,7 +40,7 @@ class RhUserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('rhUsers');
+        return redirect()->route('home');
     }
 
     public function telaAdicionarRH()

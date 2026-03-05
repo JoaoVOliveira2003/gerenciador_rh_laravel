@@ -18,7 +18,7 @@ class RhManagementController extends Controller
 {
     public function home()
     {
-        Auth::user()->can('rh') ?: abort(403, 'Vc não tem permissão');
+        // Auth::user()->can('rh') ?: abort(403, 'Vc não tem permissão');
         $colaborators = User::with('detail', 'department')->where('role', 'colaborator')->withTrashed()->get();
         return view('colaborators.colaborators', compact('colaborators'));
     }
@@ -138,4 +138,11 @@ class RhManagementController extends Controller
 
         return view('colaborators.show-details')->with('colaborator', $colaborator);
     }
+
+    public function teladeleteColaborators($id){
+        Auth::user()->can('rh') ?: abort(403, 'Não esta autorizado.!');
+
+        $colaborator = User::findOrFail($id);
+        return view('colaborators.delete-colaborator-confirm')->with('colaborator', $colaborator);
+        }
 }

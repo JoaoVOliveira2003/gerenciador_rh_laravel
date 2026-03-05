@@ -7,7 +7,7 @@
             <h3 class="my-3">{{ $colaborador->name }}</h3>
 
             <div class="d-flex justify-content-center gap-3">
-                <a href="{{ route('rhUsers') }}" class="btn btn-secondary px-5">Voltar</a>
+                <a href="{{ route('home') }}" class="btn btn-secondary px-5">Voltar</a>
                 <a href="{{route('deletarPessoaRH',['id'=>$colaborador->id])}}"class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Delete</a>
             </div>
         </div>
